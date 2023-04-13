@@ -31,13 +31,15 @@ class FlutterPlayAssetDeliveryPlugin: FlutterPlugin, MethodCallHandler {
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     if (call.method == "getAssetFile") {
       var assetName: String = call.arguments.toString()
-
+      assetList.forEach {
+        print(it)
+      }
       if (assetList.contains(assetName)) {
         val file: File = createTempFile()
         file.writeBytes(assetManager.open(assetName).readBytes())
         result.success(file.absolutePath)
       } else {
-        result.error("Asset not found", "Asset could not be found.", null)
+        result.error("Asset not found!", "Asset could not be found!", null)
       }
     } else {
       result.notImplemented()
